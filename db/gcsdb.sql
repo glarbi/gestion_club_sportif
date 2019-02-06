@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 05, 2019 at 10:17 AM
+-- Generation Time: Feb 06, 2019 at 07:23 AM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -38,9 +38,11 @@ CREATE TABLE `assurance` (
 
 INSERT INTO `assurance` (`ID`, `debut`, `fin`) VALUES
 (1, '2018-10-01', '2019-07-01'),
+(2, '2018-06-01', '2019-07-01'),
 (11, '2018-10-01', '2019-07-01'),
 (12, '2018-10-01', '2019-07-01'),
-(13, '2018-10-01', '2019-07-01');
+(13, '2018-10-01', '2019-07-01'),
+(14, '2018-06-01', '2019-02-01');
 
 -- --------------------------------------------------------
 
@@ -70,9 +72,10 @@ CREATE TABLE `athlete` (
 --
 
 INSERT INTO `athlete` (`ID`, `NOM`, `PRENOM`, `DATE_NAIS`, `LIEU_NAIS`, `PRENOM_PERE`, `PROFESSION_PERE`, `NOM_MERE`, `PRENOM_MERE`, `PROFESSION_MERE`, `ADRESSE`, `NUM_TEL`, `DATE_INSCRIPTION`, `IMG_PATH`) VALUES
-(11, 'Guezouli', 'Mohamed', '2008-03-24', 'France', 'Larbi', 'Enseignant', 'Sidi Atmane', 'Faiza', 'N?ant', 'Batna', '0560240308', '2018-10-01', NULL),
-(12, 'Chenouf', 'Abdallah', '2008-03-24', 'Batna', 'Hocine', 'Commerant', '_', '_', '_', 'Batna', '_', '2018-10-01', NULL),
-(13, 'Techir', 'Mohamed Youcef', '2011-04-10', 'Batna', 'Hassane', 'Mdecin', 'Boughrara', 'Ahlem', 'Nant', '8, bat 7, cit 729 lgts, Parc  forage, Batna', '0772481810', '2019-02-01', NULL);
+(11, 'Guezouli', 'Mohamed', '2008-03-24', 'France', 'Larbi', 'Enseignant', 'Sidi Atmane', 'Faiza', 'Neant', 'Batna', '0560240308', '2018-10-01', NULL),
+(12, 'Chenouf', 'Abdallah', '2008-03-24', 'Batna', 'Hocine', 'Commercant', '_', '_', '_', 'Batna', '_', '2018-10-01', NULL),
+(13, 'Techir', 'Mohamed Youcef', '2011-04-10', 'Batna', 'Hassane', 'Medecin', 'Boughrara', 'Ahlem', 'Neant', '8, bat 7, cite 729 lgts, Parc a forage, Batna', '0772481810', '2019-02-01', NULL),
+(14, 'Beziane', 'Mohamed Tahar', '1990-01-01', 'Batna', 'Ali', 'Enseignant', '_', '_', 'Mdecin', 'Parc a Forage', '0552982073', '2018-10-01', NULL);
 
 -- --------------------------------------------------------
 
@@ -96,7 +99,8 @@ CREATE TABLE `entraineur` (
 --
 
 INSERT INTO `entraineur` (`ID`, `NOM`, `PRENOM`, `DATE_NAIS`, `LIEU_NAIS`, `ADRESSE`, `NUM_TEL`, `DATE_INSCRIPTION`) VALUES
-(1, 'Maalem', 'Abdelmalek', '1958-02-20', 'Batna', 'Parc a Forage', '0776314514/0672444003', '2018-10-01');
+(1, 'Maalem', 'Abdelmalek', '1958-02-20', 'Batna', 'Parc a Forage', '0776314514/0672444003', '2018-10-01'),
+(2, 'Hessainia', 'Salim', '1965-09-02', 'Batna', 'Batna', '0560387636/0669341535', '2019-02-06');
 
 -- --------------------------------------------------------
 
@@ -144,7 +148,17 @@ INSERT INTO `paiement` (`ID`, `MOIS`, `MONTANT`) VALUES
 (13, '2019-04-01', '-1.00'),
 (13, '2019-05-01', '-1.00'),
 (13, '2019-06-01', '-1.00'),
-(13, '2019-07-01', '-1.00');
+(13, '2019-07-01', '-1.00'),
+(14, '2018-10-01', '0.00'),
+(14, '2018-11-01', '5000.00'),
+(14, '2018-12-01', '5000.00'),
+(14, '2019-01-01', '5000.00'),
+(14, '2019-02-01', '5000.00'),
+(14, '2019-03-01', '-1.00'),
+(14, '2019-04-01', '-1.00'),
+(14, '2019-05-01', '-1.00'),
+(14, '2019-06-01', '-1.00'),
+(14, '2019-07-01', '-1.00');
 
 --
 -- Indexes for dumped tables
