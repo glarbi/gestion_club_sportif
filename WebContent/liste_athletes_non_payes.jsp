@@ -21,7 +21,7 @@
 		</tr>
 <%
 	ATHLETE myAthlete = null;
-	ArrayList athletes = DBManager.getATHLETE_non_payes();
+	ArrayList<Object> athletes = DBManager.getATHLETE_non_payes();
 	for (int i=0; i<athletes.size(); i++)
 	{
 		myAthlete = DBManager.getATHLETE( (Integer)(athletes.get(i)) );
@@ -38,6 +38,7 @@
 %>
 	</table>
 	<br/>
+	Exporter<br>
 	<a href="index.jsp">Retour à la page d'acceuil</a><br/>
 	<a href="liste_athletes.jsp">Liste des athlètes</a><br/>
 </body>

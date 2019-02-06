@@ -2,6 +2,8 @@ package org;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -9,10 +11,8 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class DBManager {
 	public static Connection getConnection() {
@@ -333,12 +333,15 @@ System.out.println("setEntraineur3 : "+myRequest);
 		return max+1;
 	}
 	
-	public static ArrayList getATHLETE(Integer id, String nom,String prenom) {
-		ArrayList athletes = new ArrayList();
+	public static ArrayList<ArrayList<Object>> getATHLETE(Integer id, String nom,String prenom) {
+		ArrayList<ArrayList<Object>> athletes = new ArrayList<ArrayList<Object>>();
 
 		Connection con = getConnection();
 		if (con == null) {
-			athletes.add(0, "Problème de connection à la base de données");
+			ArrayList<Object> ret = new ArrayList<Object>();
+			ret.add(0, "Problème de connection à la base de données");
+			athletes.add(0, ret);
+//			athletes.add(0, "Problème de connection à la base de données");
 		} else {
 			try {
 				String myRequest = "";
@@ -366,7 +369,7 @@ System.out.println("getathletes : "+myRequest);
 				ResultSet rs = pStmt.executeQuery();
 				int j = 0;
 				while (rs.next()) {
-					ArrayList athlete = new ArrayList();
+					ArrayList<Object> athlete = new ArrayList<Object>();
 
 					Integer _id = rs.getInt("ID");
 					String _nom = rs.getString("NOM");
@@ -429,7 +432,6 @@ System.out.println("getATHLETE(id) : "+myRequest);
 
 				PreparedStatement pStmt = con.prepareStatement(myRequest);
 				ResultSet rs = pStmt.executeQuery();
-				int j = 0;
 				while (rs.next()) {
 					ret = new ATHLETE();
 					ret.ID = String.valueOf(rs.getInt("ID"));
@@ -462,12 +464,15 @@ System.out.println("getATHLETE(id) : "+myRequest);
 		return ret;
 	}
 	
-	public static ArrayList get_PAIEMENT(Integer id) {
-		ArrayList paiements = new ArrayList();
+	public static ArrayList<ArrayList<Object>> get_PAIEMENT(Integer id) {
+		ArrayList<ArrayList<Object>> paiements = new ArrayList<ArrayList<Object>>();
 
 		Connection con = getConnection();
 		if (con == null) {
-			paiements.add(0, "Problème de connection à la base de données");
+			ArrayList<Object> ret = new ArrayList<Object>();
+			ret.add(0, "Problème de connection à la base de données");
+			paiements.add(0,ret);
+//			paiements.add(0, "Problème de connection à la base de données");
 		} else {
 			try {
 				String myRequest = "";
@@ -488,7 +493,7 @@ System.out.println("get_PAIEMENT : "+myRequest);
 				ResultSet rs = pStmt.executeQuery();
 				int j = 0;
 				while (rs.next()) {
-					ArrayList paiement = new ArrayList();
+					ArrayList<Object> paiement = new ArrayList<Object>();
 
 					Integer _id = rs.getInt("ID");
 					String _mois = rs.getDate("MOIS").toString();
@@ -618,8 +623,8 @@ System.out.println("set_PAIEMENT : "+myRequest);
 		}
 	}
 	
-	public static ArrayList get_ASSURANCE(Integer id) {
-		ArrayList assurance = new ArrayList();
+	public static ArrayList<Object> get_ASSURANCE(Integer id) {
+		ArrayList<Object> assurance = new ArrayList<Object>();
 
 		Connection con = getConnection();
 		if (con == null) {
@@ -642,7 +647,6 @@ System.out.println("get_ASSURANCE : "+myRequest);
 
 				PreparedStatement pStmt = con.prepareStatement(myRequest);
 				ResultSet rs = pStmt.executeQuery();
-				int j = 0;
 				if (rs.next()) {
 					Integer _id = rs.getInt("ID");
 					String _debut = rs.getString("DEBUT");
@@ -650,7 +654,6 @@ System.out.println("get_ASSURANCE : "+myRequest);
 
 					assurance.add(0, _debut);
 					assurance.add(1, _fin);
-					j++;
 				}
 				pStmt.close();
 			} catch (SQLException e) {
@@ -669,9 +672,12 @@ System.out.println("get_ASSURANCE : "+myRequest);
 		return assurance;
 	}
 	
-	public static boolean check_ASSURANCE(Integer id, java.util.Date date) {
+	//public static boolean check_ASSURANCE(Integer id, java.util.Date date) {
+	public static boolean check_ASSURANCE(Integer id, LocalDate date) {
 		boolean ret = false;
-		String d = Integer.valueOf(date.getYear()+1900).toString() + "-" + Integer.valueOf(date.getMonth()+1).toString() + "-" + Integer.valueOf(date.getDate()).toString();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		String d = date.format(formatter);
+		//String d = Integer.valueOf(date.getYear()+1900).toString() + "-" + Integer.valueOf(date.getMonth()+1).toString() + "-" + Integer.valueOf(date.getDate()).toString();
 		Connection con = getConnection();
 		if (con != null) {
 			try {
@@ -881,12 +887,15 @@ System.out.println("init_PAIEMENT : " + myRequest);
 		}
 	}
 
-	public static ArrayList getENTRAINEUR(Integer id, String nom,String prenom) {
-		ArrayList entraineurs = new ArrayList();
+	public static ArrayList<ArrayList<Object>> getENTRAINEUR(Integer id, String nom,String prenom) {
+		ArrayList<ArrayList<Object>> entraineurs = new ArrayList<ArrayList<Object>>();
 
 		Connection con = getConnection();
 		if (con == null) {
-			entraineurs.add(0, "Problème de connection à la base de données");
+			ArrayList<Object> ret = new ArrayList<Object>();
+			ret.add(0, "Problème de connection à la base de données");
+			entraineurs.add(0,ret);
+//			entraineurs.add(0, "Problème de connection à la base de données");
 		} else {
 			try {
 				String myRequest = "";
@@ -914,7 +923,7 @@ System.out.println("getENTRAINEUR : "+myRequest);
 				ResultSet rs = pStmt.executeQuery();
 				int j = 0;
 				while (rs.next()) {
-					ArrayList entraineur = new ArrayList();
+					ArrayList<Object> entraineur = new ArrayList<Object>();
 
 					Integer _id = rs.getInt("ID");
 					String _nom = rs.getString("NOM");
@@ -966,7 +975,6 @@ System.out.println("getENTRAINEUR(id) : "+myRequest);
 
 				PreparedStatement pStmt = con.prepareStatement(myRequest);
 				ResultSet rs = pStmt.executeQuery();
-				int j = 0;
 				while (rs.next()) {
 					ret = new ENTRAINEUR();
 					ret.ID = String.valueOf(rs.getInt("ID"));
@@ -994,18 +1002,24 @@ System.out.println("getENTRAINEUR(id) : "+myRequest);
 		return ret;
 	}
 	
-	public static ArrayList getENTRAINEUR_non_assures() {
-		ArrayList entraineurs = new ArrayList();
+	public static ArrayList<ArrayList<Object>> getENTRAINEUR_non_assures() {
+		ArrayList<ArrayList<Object>> entraineurs = new ArrayList<ArrayList<Object>>();
 
-		java.util.Date date = new java.util.Date();
-		
+		//java.util.Date date = new java.util.Date();
+		LocalDate date = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
 		Connection con = getConnection();
 		if (con == null) {
-			entraineurs.add(0, "Problème de connection à la base de données");
+			ArrayList<Object> ret = new ArrayList<Object>();
+			ret.add(0, "Problème de connection à la base de données");
+			entraineurs.add(0, ret);
+//			entraineurs.add(0, "Problème de connection à la base de données");
 		} else {
 			try {
 				String myRequest = "";
-				String d = String.valueOf(date.getYear()+1900)+"-"+String.valueOf(date.getMonth()+1)+"-"+String.valueOf(date.getDate());
+				String d = date.format(formatter);
+//				String d = String.valueOf(date.getYear()+1900)+"-"+String.valueOf(date.getMonth()+1)+"-"+String.valueOf(date.getDate());
 				myRequest = "SELECT * FROM ASSURANCE WHERE ID < 11 AND FIN<'"+d+"'";
 //Afficher myRequest
 System.out.println("getENTRAINEUR_non_assures : "+myRequest);
@@ -1014,7 +1028,7 @@ System.out.println("getENTRAINEUR_non_assures : "+myRequest);
 				ResultSet rs = pStmt.executeQuery();
 				int j = 0;
 				while (rs.next()) {
-					ArrayList entraineur = new ArrayList();
+					ArrayList<Object> entraineur = new ArrayList<Object>();
 
 					Integer _id = rs.getInt("ID");
 					String _debut = rs.getString("DEBUT");
@@ -1042,18 +1056,24 @@ System.out.println("getENTRAINEUR_non_assures : "+myRequest);
 		return entraineurs;
 	}
 	
-	public static ArrayList getATHLETE_non_assures() {
-		ArrayList athletes = new ArrayList();
+	public static ArrayList<ArrayList<Object>> getATHLETE_non_assures() {
+		ArrayList<ArrayList<Object>> athletes = new ArrayList<ArrayList<Object>>();
 
-		java.util.Date date = new java.util.Date();
-		
+		//java.util.Date date = new java.util.Date();
+		LocalDate date = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
 		Connection con = getConnection();
 		if (con == null) {
-			athletes.add(0, "Problème de connection à la base de données");
+			ArrayList<Object> ret = new ArrayList<Object>();
+			ret.add(0, "Problème de connection à la base de données");
+			athletes.add(0, ret);
+			//athletes.add(0, "Problème de connection à la base de données");
 		} else {
 			try {
 				String myRequest = "";
-				String d = String.valueOf(date.getYear()+1900)+"-"+String.valueOf(date.getMonth()+1)+"-"+String.valueOf(date.getDate());
+				String d = date.format(formatter);
+				//String d = String.valueOf(date.getYear()+1900)+"-"+String.valueOf(date.getMonth()+1)+"-"+String.valueOf(date.getDate());
 				myRequest = "SELECT * FROM ASSURANCE WHERE ID>10 AND FIN<'"+d+"'";
 //Afficher myRequest
 System.out.println("getATHLETE_non_assures : "+myRequest);
@@ -1062,7 +1082,7 @@ System.out.println("getATHLETE_non_assures : "+myRequest);
 				ResultSet rs = pStmt.executeQuery();
 				int j = 0;
 				while (rs.next()) {
-					ArrayList athlete = new ArrayList();
+					ArrayList<Object> athlete = new ArrayList<Object>();
 
 					Integer _id = rs.getInt("ID");
 					String _debut = rs.getString("DEBUT");
@@ -1090,19 +1110,22 @@ System.out.println("getATHLETE_non_assures : "+myRequest);
 		return athletes;
 	}
 	
-	public static ArrayList getATHLETE_non_payes() {
-		ArrayList athletes = new ArrayList();
+	public static ArrayList<Object> getATHLETE_non_payes() {
+		ArrayList<Object> athletes = new ArrayList<Object>();
 
-		java.util.Date date = new java.util.Date();
+//		java.util.Date date = new java.util.Date();
+		LocalDate date = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-");
 		
 		Connection con = getConnection();
 		if (con == null) {
-			athletes.add(0, "Problème de connection à la base de données");
+			athletes.add("Problème de connection à la base de données");
 		} else {
 			try {
 				String myRequest = "";
-				String d = String.valueOf(date.getYear()+1900)+"-"+String.valueOf(date.getMonth()+1)+"-01";
-				myRequest = "SELECT * FROM PAIEMENT WHERE ID>10 AND MOIS='"+d+"' AND MONTANT=-1.00";
+				String d = date.format(formatter);
+//				String d = String.valueOf(date.getYear()+1900)+"-"+String.valueOf(date.getMonth()+1)+"-01";
+				myRequest = "SELECT * FROM PAIEMENT WHERE ID>10 AND MOIS='"+d+"01' AND MONTANT=-1.00";
 //Afficher myRequest
 System.out.println("getATHLETE_non_payes : "+myRequest);
 

@@ -12,15 +12,15 @@
 </head>
 <body>
 <%
-	List dayList = new ArrayList();
+	List<Integer> dayList = new ArrayList<Integer>();
 	for (int i=0; i<31; i++)
 		dayList.add(i, Integer.valueOf(i+1));
 	
-	List monthList = new ArrayList();
+	List<Integer> monthList = new ArrayList<Integer>();
 	for (int i=0; i<12; i++)
 		monthList.add(i, Integer.valueOf(i+1));
 	
-	List yearList = new ArrayList();
+	List<Integer> yearList = new ArrayList<Integer>();
 	for (int i=0; i<30; i++)
 		yearList.add(i, Integer.valueOf(i+1990));
 
@@ -45,7 +45,7 @@
 	Integer year_end = 1990;
 
 	if (idInt > 0) {
-		ArrayList assurance = DBManager.get_ASSURANCE(idInt);
+		ArrayList<Object> assurance = DBManager.get_ASSURANCE(idInt);
 		if (assurance.size() > 0)
 		{
 			String debut = (String)assurance.get(0);
@@ -84,7 +84,7 @@
 	}
 
 	if (idStr != null) {
-		ArrayList myList = null;
+		ArrayList<ArrayList<Object>> myList = null;
 		if (idInt <= 10)
 		{
 			myList = DBManager.getENTRAINEUR(idInt, "", "");
@@ -104,13 +104,13 @@
 			}
 		}
 		if (myList.size() > 0){
-			List ligne1 = (List)(myList.get(0));
+			ArrayList<Object> ligne1 = myList.get(0);
 			myPersonne.ID =		ligne1.get(0).toString();
 			myPersonne.NOM =	ligne1.get(1).toString();
 			myPersonne.PRENOM =	ligne1.get(2).toString();
 		}
 	}
-	ArrayList assurance = DBManager.get_ASSURANCE(idInt);
+	ArrayList<Object> assurance = DBManager.get_ASSURANCE(idInt);
 	if (assurance.size() > 0)
 	{
 		String debut = (String)assurance.get(0);

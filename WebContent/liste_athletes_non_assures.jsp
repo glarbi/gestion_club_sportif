@@ -3,6 +3,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="org.*" %>
+<%@ page import="java.time.*"%>
     <jsp:useBean id="mybean" scope="session" class="org.PropertyHandler" />
 <jsp:setProperty name="mybean" property="*" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -24,21 +25,22 @@
 		</tr>
 <%
 	ATHLETE myAthlete = null;
-	ArrayList athletes = null;
-	List ligne1 = null;
+	ArrayList<ArrayList<Object>> athletes = null;
+	ArrayList<Object> ligne1 = null;
 	String debut = "";
 	String fin   = "";
 	athletes = DBManager.getATHLETE_non_assures();
 	for (int i=0; i<athletes.size(); i++)
 	{
-		ligne1 = (List)(athletes.get(i));
+		ligne1 = athletes.get(i);
 		myAthlete = DBManager.getATHLETE(Integer.valueOf(ligne1.get(0).toString()));
 		debut = ligne1.get(1).toString();
 		fin   = ligne1.get(2).toString();
 		
 		String link_athlete_assurance = "assurance.jsp?ID="+myAthlete.ID;
 		
-		java.util.Date d = new java.util.Date();
+		//java.util.Date d = new java.util.Date();
+		LocalDate d = LocalDate.now();
 		String assurance = "";
 		try {
 			if ( DBManager.check_ASSURANCE(Integer.parseInt(myAthlete.ID), d) )
@@ -61,6 +63,7 @@
 %>
 	</table>
 	<br/>
+	Exporter
 	<a href="index.jsp">Retour à la page d'acceuil</a><br/>
 	<a href="liste_athletes.jsp">Liste des athlètes</a><br/>
 </body>

@@ -3,6 +3,9 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="org.*" %>
+<%@ page import="java.time.*"%>
+<%@ page import="java.time.format.DateTimeFormatter"%>
+
     <jsp:useBean id="mybean" scope="session" class="org.PropertyHandler" />
 <jsp:setProperty name="mybean" property="*" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -64,7 +67,7 @@
 		if (t3 != null) myEntraineur.PRENOM = t3;
 	}
 
-	ArrayList entraineurs = null;
+	ArrayList<ArrayList<Object>> entraineurs = null;
 	if (myEntraineur.ID == "0")
 		entraineurs = DBManager.getENTRAINEUR(0, "", "");
 	else {
@@ -74,10 +77,10 @@
 			System.out.println("Exception : " + e.getMessage());
 		}
 	}
-	List ligne1 = null;
+	ArrayList<Object> ligne1 = null;
 	for (int i=0; i<entraineurs.size(); i++)
 	{
-		ligne1 = (List)(entraineurs.get(i));
+		ligne1 = entraineurs.get(i);
 		myEntraineur.ID =				ligne1.get(0).toString();
 		myEntraineur.NOM =				ligne1.get(1).toString();
 		myEntraineur.PRENOM =			ligne1.get(2).toString();
@@ -91,10 +94,14 @@
 		String link_entraineur_paiement = "paiement.jsp?ID="+myEntraineur.ID;
 		String link_entraineur_assurance = "assurance.jsp?ID="+myEntraineur.ID;
 		
-		java.util.Date d = new java.util.Date();
+		//java.util.Date d = new java.util.Date();
+		LocalDate d = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
 		String paiement = "";
 		try {
-			String date = String.valueOf(d.getYear()+1900)+"-"+String.valueOf(d.getMonth()+1)+"-01";
+			String date = d.format(formatter);
+//			String date = String.valueOf(d.getYear()+1900)+"-"+String.valueOf(d.getMonth()+1)+"-01";
 			if ( DBManager.check_PAIEMENT(Integer.parseInt(myEntraineur.ID), date) )
 				paiement = "OK";
 			else paiement = "<font color=\"red\">Non payé</font>";

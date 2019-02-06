@@ -4,6 +4,9 @@
 <%@ page import="java.util.List" %>
 <%@ page import="org.*" %>
 <%@ page import="java.util.StringTokenizer" %>
+<%@ page import="java.time.*"%>
+<%@ page import="java.time.format.DateTimeFormatter"%>
+
 
 <html>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -13,15 +16,15 @@
 </head>
 <body>
 <%
-	List dayList = new ArrayList();
+	List<Integer> dayList = new ArrayList<Integer>();
 	for (int i=0; i<31; i++)
 		dayList.add(i, Integer.valueOf(i+1));
 	
-	List monthList = new ArrayList();
+	List<Integer> monthList = new ArrayList<Integer>();
 	for (int i=0; i<12; i++)
 		monthList.add(i, Integer.valueOf(i+1));
 	
-	List yearList = new ArrayList();
+	List<Integer> yearList = new ArrayList<Integer>();
 	for (int i=0; i<30; i++)
 		yearList.add(i, Integer.valueOf(i+1990));
 	Integer day_naissance = 1;
@@ -70,18 +73,15 @@
 			System.out.println("Exception : " + e.getMessage());
 		}
 	}
-	else
-	{
-%>
-	<a href="javascript:alert('Message d\'alerte \nAu feu!!');">Test</a>
-		Données manquantes!!!
-<%
-	}
 
 	if (t1==null) t1 = DBManager.getFreeAthleteID().toString();
-	java.util.Date date = new java.util.Date();
-	String d = String.valueOf(date.getYear()+1900)+"-"+String.valueOf(date.getMonth()+1)+"-"+String.valueOf(date.getDate());
-	ATHLETE myAthlete = new ATHLETE(t1, "_", "_", "1990-01-01", "_", "_", "_", d, "_", "_", "_", "_", "_");
+	//java.util.Date date = new java.util.Date();
+	LocalDate date = LocalDate.now();
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	String today = date.format(formatter);
+	
+	//String today = String.valueOf(date.getYear()+1900)+"-"+String.valueOf(date.getMonth()+1)+"-"+String.valueOf(date.getDate());
+	ATHLETE myAthlete = new ATHLETE(t1, "_", "_", "1990-01-01", "_", "_", "_", today, "_", "_", "_", "_", "_");
 	Integer day = null;
 	Integer month = null;
 	Integer year = null;
@@ -96,9 +96,9 @@
 		}
 	}
 	if (t1 != null) {
-		ArrayList athletes = DBManager.getATHLETE(idInt, "", "");
+		ArrayList<ArrayList<Object>> athletes = DBManager.getATHLETE(idInt, "", "");
 		if (athletes.size() > 0){
-			List ligne1 = (List)(athletes.get(0));
+			List<Object> ligne1 = (List<Object>)(athletes.get(0));
 			myAthlete.ID =					ligne1.get(0).toString();
 			myAthlete.NOM =					ligne1.get(1).toString();
 			myAthlete.PRENOM =				ligne1.get(2).toString();

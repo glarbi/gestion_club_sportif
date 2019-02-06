@@ -3,6 +3,9 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="org.*" %>
+<%@ page import="java.time.*"%>
+<%@ page import="java.time.format.DateTimeFormatter"%>
+
 
 <html>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -17,7 +20,7 @@
 	Integer idInt = null;
 	String montant = "";
 	String check = "";
-	ArrayList affichages = null;
+	ArrayList<ArrayList<Object>> affichages = null;
 	if (idStr != null)
 	{
 		try {
@@ -26,10 +29,13 @@
 			System.out.println("Exception : " + e.getMessage());
 		}
 		
-		java.util.Date d = new java.util.Date();
+		//java.util.Date d = new java.util.Date();
+		LocalDate d = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
 		int my_year = 0;
-		if (d.getMonth()+1 >= 10) my_year = d.getYear()+1900; else
-			my_year = d.getYear()+1899;
+		//if (d.getMonth()+1 >= 10) my_year = d.getYear()+1900; else my_year = d.getYear()+1899;
+		if (d.getMonthValue()+1 >= 10) my_year = d.getYear(); else my_year = d.getYear()-1;
 		
 		montant = request.getParameter("montant_Octobre");
 		check = request.getParameter("Octobre");
@@ -93,7 +99,7 @@
 			DBManager.set_PAIEMENT(idInt, (my_year+1)+"/07/01", Float.valueOf(-1));
 	
 		if (idStr != null) {
-			ArrayList myList = null;
+			ArrayList<ArrayList<Object>> myList = null;
 			if (idInt<=10)
 			{
 				myList = DBManager.getENTRAINEUR(idInt, "", "");
@@ -113,87 +119,87 @@
 				}
 			}
 			if (myList.size() > 0){
-				List ligne1 = (List)(myList.get(0));
+				List<Object> ligne1 = myList.get(0);
 				myPersonne.ID =		ligne1.get(0).toString();
 				myPersonne.NOM =	ligne1.get(1).toString();
 				myPersonne.PRENOM =	ligne1.get(2).toString();
 			}
 			
 			// Paiements
-			ArrayList paiements = DBManager.get_PAIEMENT(idInt);
-			affichages = new ArrayList();
+			ArrayList<ArrayList<Object>> paiements = DBManager.get_PAIEMENT(idInt);
+			affichages = new ArrayList<ArrayList<Object>>();
 			for (int i=0; i<10; i++)
 			{
-				List affichage = new ArrayList();
+				ArrayList<Object> affichage = new ArrayList<Object>();
 				affichage.add(0, "0.00"); affichage.add(1, "");
 				affichages.add(i, affichage);
 			}
-			List ligne = null;
+			ArrayList<Object> ligne = null;
 			for (int i=0; i<paiements.size(); i++)
 			{
-				ligne = (List)(paiements.get(i));
+				ligne = paiements.get(i);
 				String tmp = ligne.get(1).toString();
 				int pos = tmp.lastIndexOf("-");
 				int mois = Integer.parseInt(tmp.substring(pos-2, pos)); // Mois
 				tmp = ligne.get(2).toString(); //Montant
-				List affichage = null;
+				ArrayList<Object> affichage = null;
 				switch (mois) {
 				case 10: {
-					affichage = (List)affichages.get(0);
+					affichage = affichages.get(0);
 					affichage.add(0, tmp);
 					if (!tmp.equals("-1.00")) affichage.add(1, "CHECKED");
 					break;
 				}
 				case 11: {
-					affichage = (List)affichages.get(1);
+					affichage = affichages.get(1);
 					affichage.add(0, tmp);
 					if (!tmp.equals("-1.00")) affichage.add(1, "CHECKED");
 					break;
 				}
 				case 12: {
-					affichage = (List)affichages.get(2);
+					affichage = affichages.get(2);
 					affichage.add(0, tmp);
 					if (!tmp.equals("-1.00")) affichage.add(1, "CHECKED");
 					break;
 				}
 				case 1: {
-					affichage = (List)affichages.get(3);
+					affichage = affichages.get(3);
 					affichage.add(0, tmp);
 					if (!tmp.equals("-1.00")) affichage.add(1, "CHECKED");
 					break;
 				}
 				case 2: {
-					affichage = (List)affichages.get(4);
+					affichage = affichages.get(4);
 					affichage.add(0, tmp);
 					if (!tmp.equals("-1.00")) affichage.add(1, "CHECKED");
 					break;
 				}
 				case 3: {
-					affichage = (List)affichages.get(5);
+					affichage = affichages.get(5);
 					affichage.add(0, tmp);
 					if (!tmp.equals("-1.00")) affichage.add(1, "CHECKED");
 					break;
 				}
 				case 4: {
-					affichage = (List)affichages.get(6);
+					affichage = affichages.get(6);
 					affichage.add(0, tmp);
 					if (!tmp.equals("-1.00")) affichage.add(1, "CHECKED");
 					break;
 				}
 				case 5: {
-					affichage = (List)affichages.get(7);
+					affichage = affichages.get(7);
 					affichage.add(0, tmp);
 					if (!tmp.equals("-1.00")) affichage.add(1, "CHECKED");
 					break;
 				}
 				case 6: {
-					affichage = (List)affichages.get(8);
+					affichage = affichages.get(8);
 					affichage.add(0, tmp);
 					if (!tmp.equals("-1.00")) affichage.add(1, "CHECKED");
 					break;
 				}
 				case 7: {
-					affichage = (List)affichages.get(9);
+					affichage = affichages.get(9);
 					affichage.add(0, tmp);
 					if (!tmp.equals("-1.00")) affichage.add(1, "CHECKED");
 					break;
@@ -254,82 +260,82 @@
 		</tr>
 		<tr>
 			<th>
-				<p align="left"><INPUT TYPE=CHECKBOX NAME="Octobre" <%=((List)affichages.get(0)).get(1).toString()%>>Octobre</p>
+				<p align="left"><INPUT TYPE=CHECKBOX NAME="Octobre" <%=(affichages.get(0)).get(1).toString()%>>Octobre</p>
 			</th>
 			<th>
-				<p align="left">Montant : <input type="text" name="montant_Octobre" style=color:graytext  value="<%=((List)affichages.get(0)).get(0).toString()%>" size=25 align="right" /></p>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<p align="left"><INPUT TYPE=CHECKBOX NAME="Novembre" <%=((List)affichages.get(1)).get(1).toString()%>>Novembre</p>
-			</th>
-			<th>
-				<p align="left">Montant : <input type="text" name="montant_Novembre" style=color:graytext  value="<%=((List)affichages.get(1)).get(0).toString()%>" size=25 align="right" /></p>
+				<p align="left">Montant : <input type="text" name="montant_Octobre" style=color:graytext  value="<%=(affichages.get(0)).get(0).toString()%>" size=25 align="right" /></p>
 			</th>
 		</tr>
 		<tr>
 			<th>
-				<p align="left"><INPUT TYPE=CHECKBOX NAME="Decembre" <%=((List)affichages.get(2)).get(1).toString()%>>Décembre</p>
+				<p align="left"><INPUT TYPE=CHECKBOX NAME="Novembre" <%=(affichages.get(1)).get(1).toString()%>>Novembre</p>
 			</th>
 			<th>
-				<p align="left">Montant : <input type="text" name="montant_Decembre" style=color:graytext  value="<%=((List)affichages.get(2)).get(0).toString()%>" size=25 align="right" /></p>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<p align="left"><INPUT TYPE=CHECKBOX NAME="Janvier" <%=((List)affichages.get(3)).get(1).toString()%>>Janvier</p>
-			</th>
-			<th>
-				<p align="left">Montant : <input type="text" name="montant_Janvier" style=color:graytext  value="<%=((List)affichages.get(3)).get(0).toString()%>" size=25 align="right" /></p>
+				<p align="left">Montant : <input type="text" name="montant_Novembre" style=color:graytext  value="<%=(affichages.get(1)).get(0).toString()%>" size=25 align="right" /></p>
 			</th>
 		</tr>
 		<tr>
 			<th>
-				<p align="left"><INPUT TYPE=CHECKBOX NAME="Fevrier" <%=((List)affichages.get(4)).get(1).toString()%>>Février</p>
+				<p align="left"><INPUT TYPE=CHECKBOX NAME="Decembre" <%=(affichages.get(2)).get(1).toString()%>>Décembre</p>
 			</th>
 			<th>
-				<p align="left">Montant : <input type="text" name="montant_Fevrier" style=color:graytext  value="<%=((List)affichages.get(4)).get(0).toString()%>" size=25 align="right" /></p>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<p align="left"><INPUT TYPE=CHECKBOX NAME="Mars" <%=((List)affichages.get(5)).get(1).toString()%>>Mars</p>
-			</th>
-			<th>
-				<p align="left">Montant : <input type="text" name="montant_Mars" style=color:graytext  value="<%=((List)affichages.get(5)).get(0).toString()%>" size=25 align="right" /></p>
+				<p align="left">Montant : <input type="text" name="montant_Decembre" style=color:graytext  value="<%=(affichages.get(2)).get(0).toString()%>" size=25 align="right" /></p>
 			</th>
 		</tr>
 		<tr>
 			<th>
-				<p align="left"><INPUT TYPE=CHECKBOX NAME="Avril" <%=((List)affichages.get(6)).get(1).toString()%>>Avril</p>
+				<p align="left"><INPUT TYPE=CHECKBOX NAME="Janvier" <%=(affichages.get(3)).get(1).toString()%>>Janvier</p>
 			</th>
 			<th>
-				<p align="left">Montant : <input type="text" name="montant_Avril" style=color:graytext  value="<%=((List)affichages.get(6)).get(0).toString()%>" size=25 align="right" /></p>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				<p align="left"><INPUT TYPE=CHECKBOX NAME="Mai" <%=((List)affichages.get(7)).get(1).toString()%>>Mai</p>
-			</th>
-			<th>
-				<p align="left">Montant : <input type="text" name="montant_Mai" style=color:graytext  value="<%=((List)affichages.get(7)).get(0).toString()%>" size=25 align="right" /></p>
+				<p align="left">Montant : <input type="text" name="montant_Janvier" style=color:graytext  value="<%=(affichages.get(3)).get(0).toString()%>" size=25 align="right" /></p>
 			</th>
 		</tr>
 		<tr>
 			<th>
-				<p align="left"><INPUT TYPE=CHECKBOX NAME="Juin" <%=((List)affichages.get(8)).get(1).toString()%>>Juin</p>
+				<p align="left"><INPUT TYPE=CHECKBOX NAME="Fevrier" <%=(affichages.get(4)).get(1).toString()%>>Février</p>
 			</th>
 			<th>
-				<p align="left">Montant : <input type="text" name="montant_Juin" style=color:graytext  value="<%=((List)affichages.get(8)).get(0).toString()%>" size=25 align="right" /></p>
+				<p align="left">Montant : <input type="text" name="montant_Fevrier" style=color:graytext  value="<%=(affichages.get(4)).get(0).toString()%>" size=25 align="right" /></p>
 			</th>
 		</tr>
 		<tr>
 			<th>
-				<p align="left"><INPUT TYPE=CHECKBOX NAME="Juillet" <%=((List)affichages.get(9)).get(1).toString()%>>Juillet</p>
+				<p align="left"><INPUT TYPE=CHECKBOX NAME="Mars" <%=(affichages.get(5)).get(1).toString()%>>Mars</p>
 			</th>
 			<th>
-				<p align="left">Montant : <input type="text" name="montant_Juillet" style=color:graytext  value="<%=((List)affichages.get(9)).get(0).toString()%>" size=25 align="right" /></p>
+				<p align="left">Montant : <input type="text" name="montant_Mars" style=color:graytext  value="<%=(affichages.get(5)).get(0).toString()%>" size=25 align="right" /></p>
+			</th>
+		</tr>
+		<tr>
+			<th>
+				<p align="left"><INPUT TYPE=CHECKBOX NAME="Avril" <%=(affichages.get(6)).get(1).toString()%>>Avril</p>
+			</th>
+			<th>
+				<p align="left">Montant : <input type="text" name="montant_Avril" style=color:graytext  value="<%=(affichages.get(6)).get(0).toString()%>" size=25 align="right" /></p>
+			</th>
+		</tr>
+		<tr>
+			<th>
+				<p align="left"><INPUT TYPE=CHECKBOX NAME="Mai" <%=(affichages.get(7)).get(1).toString()%>>Mai</p>
+			</th>
+			<th>
+				<p align="left">Montant : <input type="text" name="montant_Mai" style=color:graytext  value="<%=(affichages.get(7)).get(0).toString()%>" size=25 align="right" /></p>
+			</th>
+		</tr>
+		<tr>
+			<th>
+				<p align="left"><INPUT TYPE=CHECKBOX NAME="Juin" <%=(affichages.get(8)).get(1).toString()%>>Juin</p>
+			</th>
+			<th>
+				<p align="left">Montant : <input type="text" name="montant_Juin" style=color:graytext  value="<%=(affichages.get(8)).get(0).toString()%>" size=25 align="right" /></p>
+			</th>
+		</tr>
+		<tr>
+			<th>
+				<p align="left"><INPUT TYPE=CHECKBOX NAME="Juillet" <%=(affichages.get(9)).get(1).toString()%>>Juillet</p>
+			</th>
+			<th>
+				<p align="left">Montant : <input type="text" name="montant_Juillet" style=color:graytext  value="<%=(affichages.get(9)).get(0).toString()%>" size=25 align="right" /></p>
 			</th>
 		</tr>
 	</table>

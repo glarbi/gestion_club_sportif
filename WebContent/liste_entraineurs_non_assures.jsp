@@ -3,6 +3,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="org.*" %>
+<%@ page import="java.time.*"%>
     <jsp:useBean id="mybean" scope="session" class="org.PropertyHandler" />
 <jsp:setProperty name="mybean" property="*" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -23,21 +24,22 @@
 		</tr>
 <%
 	ENTRAINEUR myEntraineur = null;
-	ArrayList entraineurs = null;
-	List ligne1 = null;
+	ArrayList<ArrayList<Object>> entraineurs = null;
+	ArrayList<Object> ligne1 = null;
 	String debut = "";
 	String fin   = "";
 	entraineurs = DBManager.getENTRAINEUR_non_assures();
 	for (int i=0; i<entraineurs.size(); i++)
 	{
-		ligne1 = (List)(entraineurs.get(i));
+		ligne1 = entraineurs.get(i);
 		myEntraineur = DBManager.getENTRAINEUR(Integer.valueOf(ligne1.get(0).toString()));
 		debut = ligne1.get(1).toString();
 		fin   = ligne1.get(2).toString();
 		
 		String link_entraineur_assurance = "assurance.jsp?ID="+myEntraineur.ID;
 		
-		java.util.Date d = new java.util.Date();
+		//java.util.Date d = new java.util.Date();
+		LocalDate d = LocalDate.now();
 		String assurance = "";
 		try {
 			if ( DBManager.check_ASSURANCE(Integer.parseInt(myEntraineur.ID), d) )

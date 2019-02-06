@@ -4,6 +4,9 @@
 <%@ page import="java.util.List" %>
 <%@ page import="org.*" %>
 <%@ page import="java.util.StringTokenizer" %>
+<%@ page import="java.time.*"%>
+<%@ page import="java.time.format.DateTimeFormatter"%>
+
 
 <html>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -13,15 +16,15 @@
 </head>
 <body>
 <%
-	List dayList = new ArrayList();
+	List<Integer> dayList = new ArrayList<Integer>();
 	for (int i=0; i<31; i++)
 		dayList.add(i, Integer.valueOf(i+1));
 	
-	List monthList = new ArrayList();
+	List<Integer> monthList = new ArrayList<Integer>();
 	for (int i=0; i<12; i++)
 		monthList.add(i, Integer.valueOf(i+1));
 	
-	List yearList = new ArrayList();
+	List<Integer> yearList = new ArrayList<Integer>();
 	for (int i=0; i<90; i++)
 		yearList.add(i, Integer.valueOf(i+1940));
 
@@ -66,17 +69,13 @@
 			System.out.println("Exception : " + e.getMessage());
 		}
 	}
-	else
-	{
-%>
-	<a href="javascript:alert('Message d\'alerte \nAu feu!!');">Test</a>
-		Données manquantes!!!
-<%
-	}
 
 	if (t1==null) t1 = DBManager.getFreeEntraineurID().toString();
-	java.util.Date date = new java.util.Date();
-	String d = String.valueOf(date.getYear()+1900)+"-"+String.valueOf(date.getMonth()+1)+"-"+String.valueOf(date.getDate());
+	//java.util.Date date = new java.util.Date();
+	LocalDate date = LocalDate.now();
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	String d = date.format(formatter);
+//	String d = String.valueOf(date.getYear()+1900)+"-"+String.valueOf(date.getMonth()+1)+"-"+String.valueOf(date.getDate());
 	ENTRAINEUR myEntraineur = new ENTRAINEUR(t1, "_", "_", "1940-01-01", "_", "_", "_", d);
 	Integer day = null;
 	Integer month = null;
@@ -92,9 +91,9 @@
 		}
 	}
 	if (t1 != null) {
-		ArrayList entraineurs = DBManager.getENTRAINEUR(idInt, "", "");
+		ArrayList<ArrayList<Object>> entraineurs = DBManager.getENTRAINEUR(idInt, "", "");
 		if (entraineurs.size() > 0){
-			List ligne1 = (List)(entraineurs.get(0));
+			List<Object> ligne1 = entraineurs.get(0);
 			myEntraineur.ID =					ligne1.get(0).toString();
 			myEntraineur.NOM =					ligne1.get(1).toString();
 			myEntraineur.PRENOM =				ligne1.get(2).toString();
