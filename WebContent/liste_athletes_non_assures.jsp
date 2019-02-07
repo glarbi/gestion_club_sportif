@@ -4,8 +4,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="org.*" %>
 <%@ page import="java.time.*"%>
-    <jsp:useBean id="mybean" scope="session" class="org.PropertyHandler" />
-<jsp:setProperty name="mybean" property="*" />
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
