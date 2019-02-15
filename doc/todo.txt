@@ -1,5 +1,3 @@
 * Faire sortir le nom du club dans un fichier de confugration
 * Utiliser Java8 pour la gestion des dates
-* Mettre de projet sur GitHub
-* Exporter la base
 * Utiliser l'arabe

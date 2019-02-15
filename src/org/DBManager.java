@@ -341,7 +341,6 @@ System.out.println("setEntraineur3 : "+myRequest);
 			ArrayList<Object> ret = new ArrayList<Object>();
 			ret.add(0, "Problème de connection à la base de données");
 			athletes.add(0, ret);
-//			athletes.add(0, "Problème de connection à la base de données");
 		} else {
 			try {
 				String myRequest = "";

@@ -21,6 +21,7 @@
 <%
 	ATHLETE myAthlete = null;
 	ArrayList<Object> athletes = DBManager.getATHLETE_non_payes();
+	String toExcel = "";
 	for (int i=0; i<athletes.size(); i++)
 	{
 		myAthlete = DBManager.getATHLETE( (Integer)(athletes.get(i)) );
@@ -33,11 +34,20 @@
 			<th> <%=myAthlete.PRENOM%> </th>										<!-- case 3 -->
 		</tr>
 <%
+		toExcel = toExcel + myAthlete.ID + "\t"  + myAthlete.NOM + "\t"  + myAthlete.PRENOM + "\n" ;
 	}
 %>
 	</table>
+	<p hidden=true id="toExcelTag"><%=toExcel %></p>
 	<br/>
-	Exporter<br>
+	<br/>
+	
+	<input type="button" id="exportbtn" value="Exporter la liste" onclick="download('hello.xls');" />
+	<script src="myScripts.js"></script>
+	
+	<br/>
+	<br/>
+	<br/>
 	<a href="index.jsp">Retour à la page d'acceuil</a><br/>
 	<a href="liste_athletes.jsp">Liste des athlètes</a><br/>
 </body>
