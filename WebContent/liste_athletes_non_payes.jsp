@@ -9,8 +9,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Liste des athlètes en retard de paiement</title>
+<script type="text/javascript" src="jszip.js"></script>
+<script type="text/javascript" src="FileSaver.js"></script>
+<script type="text/javascript" src="myexcel.js"></script>
 </head>
 <body>
+	<script src="scriptExcel_Liste_Athletes_non_Payes.js"></script>
 	<h2 style="color:white;background-color:#6683b1;text-align:center">Liste des athlètes en retard de paiement</h2>
 	<table border="1" >
 		<tr>								<!-- ligne1 -->
@@ -21,7 +25,7 @@
 <%
 	ATHLETE myAthlete = null;
 	ArrayList<Object> athletes = DBManager.getATHLETE_non_payes();
-	String toExcel = "";
+
 	for (int i=0; i<athletes.size(); i++)
 	{
 		myAthlete = DBManager.getATHLETE( (Integer)(athletes.get(i)) );
@@ -33,16 +37,19 @@
 			<th> <%=myAthlete.NOM%> </th>											<!-- case 2 -->
 			<th> <%=myAthlete.PRENOM%> </th>										<!-- case 3 -->
 		</tr>
-<%
-		toExcel = toExcel + myAthlete.ID + "\t"  + myAthlete.NOM + "\t"  + myAthlete.PRENOM + "\n" ;
+		<script>
+		excel_Athletes_non_Payes.set(0,0,<%=i%>+1,"<%=myAthlete.ID%>");
+		excel_Athletes_non_Payes.set(0,1,<%=i%>+1,"<%=myAthlete.NOM%>");
+		excel_Athletes_non_Payes.set(0,2,<%=i%>+1,"<%=myAthlete.PRENOM%>");
+		</script>
+	    <%
 	}
-%>
+		%>
 	</table>
-	<p hidden=true id="toExcelTag"><%=toExcel %></p>
 	<br/>
 	<br/>
 	
-	<input type="button" id="exportbtn" value="Exporter la liste" onclick="download('hello.xls');" />
+	<input type="button" id="exportbtn" value="Exporter la liste" onclick="download_Athletes_non_Payes('Liste_Athletes_non_Payes.xlsx');" />
 	<script src="myScripts.js"></script>
 	
 	<br/>

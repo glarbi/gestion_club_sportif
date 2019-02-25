@@ -11,8 +11,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Liste des athlètes non assurés</title>
+<script type="text/javascript" src="jszip.js"></script>
+<script type="text/javascript" src="FileSaver.js"></script>
+<script type="text/javascript" src="myexcel.js"></script>
 </head>
 <body>
+	<script src="scriptExcel_Liste_Athletes_non_Assures.js"></script>
 	<h2 style="color: white; background-color: #6683b1; text-align: center">Liste
 		des athlètes non assurés</h2>
 	<table border="1">
@@ -37,7 +41,6 @@
 	ArrayList<Object> ligne1 = null;
 	String debut = "";
 	String fin   = "";
-	String toExcel = "";
 	athletes = DBManager.getATHLETE_non_assures();
 	for (int i=0; i<athletes.size(); i++)
 	{
@@ -48,7 +51,6 @@
 		
 		String link_athlete_assurance = "assurance.jsp?ID="+myAthlete.ID;
 		
-		//java.util.Date d = new java.util.Date();
 		LocalDate d = LocalDate.now();
 		String assurance = "";
 		try {
@@ -74,16 +76,22 @@
 			<th><%=fin%></th>
 			<!-- case 6 -->
 		</tr>
-		<%
-		toExcel = toExcel + myAthlete.NOM + "\t"  + myAthlete.PRENOM + "\t"  + myAthlete.DATE_NAIS + "\t"  + debut + "\t"  + fin + "\n" ;
+		<script>
+		excel_Athletes_non_Assures.set(0,0,<%=i%>+1,"<%=myAthlete.ID%>");
+		excel_Athletes_non_Assures.set(0,1,<%=i%>+1,"<%=myAthlete.NOM%>");
+		excel_Athletes_non_Assures.set(0,2,<%=i%>+1,"<%=myAthlete.PRENOM%>");
+		excel_Athletes_non_Assures.set(0,3,<%=i%>+1,"<%=myAthlete.DATE_NAIS%>");
+		excel_Athletes_non_Assures.set(0,4,<%=i%>+1,"<%=debut%>");
+		excel_Athletes_non_Assures.set(0,5,<%=i%>+1,"<%=fin%>");
+		</script>
+	    <%
 	}
-%>
+		%>
 	</table>
-	<p hidden=true id="toExcelTag"><%=toExcel %></p>
 	<br />
 	<br />
 
-	<input type="button" id="exportbtn" value="Exporter la liste" onclick="download('hello.xls');" />
+	<input type="button" id="exportbtn" value="Exporter la liste" onclick="download_Athletes_non_Assures('Liste_Athletes_non_Assures.xlsx');" />
 	<script src="myScripts.js"></script>
 
 	<br />

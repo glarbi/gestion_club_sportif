@@ -13,7 +13,7 @@ sudo chown -R larbi driver_assistance_system/
 
 Send to repository:
 -------------------
-git add *.cpp						//Add new files to the index to commit them
+git add *.js						//Add new files to the index to commit them
 git commit -a -m 'message'			//Record all your changes to the local repository.
 git push							//Update the remote repository with your local changes.
 

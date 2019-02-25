@@ -74,8 +74,6 @@
 	tmp = request.getParameter("Year_end");
 	if (tmp != null) year_end = Integer.valueOf(tmp);
 	
-/*	if (day_begin == 1 || month_begin == 1 || year_begin == 1990 ||
-			day_end == 1 || month_end == 1 || year_end == 1990)*/
 	if (!(day_begin == 1 && month_begin == 1 && year_begin == 1990 &&
 		day_end == 1 && month_end == 1 && year_end == 1990))
 	{

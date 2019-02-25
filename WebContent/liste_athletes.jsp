@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>DOSSIERS DES ATHLETES</title>
+<title>LISTE DES ATHLETES</title>
 <script type="text/javascript" src="jszip.js"></script>
 <script type="text/javascript" src="FileSaver.js"></script>
 <script type="text/javascript" src="myexcel.js"></script>
@@ -35,11 +35,10 @@
 	</form>
 
 	<br/>
-	<!-- <input type="button" id="exportbtn" value="Exporter la liste" onclick="download('hello.xls');" /> -->
-	<input type="button" id="exportbtn" value="Exporter la liste" onclick="download2('liste_athletes.xlsx');" />
-	
+	<input type="button" id="exportbtn" value="Exporter la liste" onclick="download_Athletes('Liste_Athletes.xlsx');" />
 	<script src="myScripts.js"></script>
-	<script src="myScriptExcel.js"></script>
+	<script src="scriptExcel_Liste_Athletes.js"></script>
+	
 	<table border="1" >
 		<caption><h2 style="color:white;background-color:#6683b1;text-align:center">Liste des athlètes</h2></caption>
 		<tr>								<!-- ligne1 -->
@@ -62,7 +61,6 @@
 <%
 	ATHLETE myAthlete = new ATHLETE();
 	
-	//<jsp:getProperty name="mybean" property="nom"/>
 	String t1 = request.getParameter("id");
 	String t2 = request.getParameter("nom");
 	String t3 = request.getParameter("prenom");
@@ -90,11 +88,11 @@
 	int athletesSize = athletes.size();
 	%>
 	<script>
-	for (var i=1;i<athletesSize;i++) excel.set({row:i,style: i%2==0 ? evenRow: oddRow  });
+	for (var i=1;i < <%=athletesSize%>;i++) excel_Athletes.set({row:i, style: i%2==0 ? evenRow: oddRow  });
 	</script>
 	<%
 	ArrayList<Object> ligne1 = null;
-	String toExcel = "";
+
 	for (int i=0; i<athletesSize; i++)
 	{
 		ligne1 = athletes.get(i);
@@ -116,7 +114,6 @@
 		String link_athlete_paiement = "paiement.jsp?ID="+myAthlete.ID;
 		String link_athlete_assurance = "assurance.jsp?ID="+myAthlete.ID;
 		
-		//java.util.Date d = new java.util.Date();
 		LocalDate d = LocalDate.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-");
 
@@ -166,14 +163,25 @@
 			<th> <%=myAthlete.DATE_INSCRIPTION%> </th>								<!-- case 15 -->
 		</tr>
 		<script>
-		excel.set(0,0,i+1,"<%=myAthlete.ID%>");
-		excel.set(0,1,i+1,"<%=myAthlete.NOM%>");
-		</script>
-		<%
-		toExcel = toExcel + myAthlete.ID + "\t" + myAthlete.NOM + "\t"  + myAthlete.PRENOM + "\t"  + paiementToExcel + "\t" + assuranceToExcel + "\t" + myAthlete.DATE_NAIS + "\t" + myAthlete.LIEU_NAIS + "\t"  + myAthlete.prenomPere + "\t" + myAthlete.profPere + "\t" + myAthlete.nomMere + "\t" + myAthlete.prenomMere + "\t" + myAthlete.profMere + "\t" + myAthlete.ADRESSE + "\t" + myAthlete.NUM_TEL + "\t" + myAthlete.DATE_INSCRIPTION + "\n";
+		excel_Athletes.set(0,0,<%=i%>+1,"<%=myAthlete.ID%>");
+		excel_Athletes.set(0,1,<%=i%>+1,"<%=myAthlete.NOM%>");
+		excel_Athletes.set(0,2,<%=i%>+1,"<%=myAthlete.PRENOM%>");
+		excel_Athletes.set(0,3,<%=i%>+1,"<%=paiementToExcel%>");
+		excel_Athletes.set(0,4,<%=i%>+1,"<%=assuranceToExcel%>");
+		excel_Athletes.set(0,5,<%=i%>+1,"<%=myAthlete.DATE_NAIS%>");
+		excel_Athletes.set(0,6,<%=i%>+1,"<%=myAthlete.LIEU_NAIS%>");
+		excel_Athletes.set(0,7,<%=i%>+1,"<%=myAthlete.prenomPere%>");
+		excel_Athletes.set(0,8,<%=i%>+1,"<%=myAthlete.profPere%>");
+		excel_Athletes.set(0,9,<%=i%>+1,"<%=myAthlete.nomMere%>");
+		excel_Athletes.set(0,10,<%=i%>+1,"<%=myAthlete.prenomMere%>");
+		excel_Athletes.set(0,11,<%=i%>+1,"<%=myAthlete.profMere%>");
+		excel_Athletes.set(0,12,<%=i%>+1,"<%=myAthlete.ADRESSE%>");
+		excel_Athletes.set(0,13,<%=i%>+1,"<%=myAthlete.NUM_TEL%>");
+		excel_Athletes.set(0,14,<%=i%>+1,"<%=myAthlete.DATE_INSCRIPTION%>");
+	    </script>
+	    <%
 	}
 		%>
 	</table>
-	<p hidden=true id="toExcelTag"><%=toExcel %></p>
 </body>
 </html>

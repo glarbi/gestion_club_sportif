@@ -1,3 +1,2 @@
 * Faire sortir le nom du club dans un fichier de confugration
-* Utiliser Java8 pour la gestion des dates
 * Utiliser l'arabe
