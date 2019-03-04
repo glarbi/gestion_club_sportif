@@ -44,7 +44,7 @@ public class DBManager {
 		PreparedStatement pStmt;
 		try {
 			//Création de la table "ATHLETE"
-			myRequest = "CREATE TABLE ATHLETE ("+
+			myRequest = "CREATE TABLE IF NOT EXISTS ATHLETE ("+
 			"ID INTEGER PRIMARY KEY,"+ // Identifiant athlète (11-infini)
 			"NOM VARCHAR(30) NOT NULL,"+
 			"PRENOM VARCHAR(30) NOT NULL,"+
@@ -71,7 +71,7 @@ System.out.println("INFO -- Create table : "+myRequest);
 
 		try {
 			//Création de la table "ENTRAINEUR"
-			myRequest = "CREATE TABLE ENTRAINEUR ("+
+			myRequest = "CREATE TABLE IF NOT EXISTS ENTRAINEUR ("+
 			"ID INTEGER PRIMARY KEY,"+ // Identifiant entraineur (1-10)
 			"NOM VARCHAR(30) NOT NULL,"+
 			"PRENOM VARCHAR(30) NOT NULL,"+
@@ -92,7 +92,7 @@ System.out.println("INFO -- Create table : "+myRequest);
 
 		try {
 			//Création de la table "PAIEMENT"
-			myRequest = "CREATE TABLE PAIEMENT ("+
+			myRequest = "CREATE TABLE IF NOT EXISTS PAIEMENT ("+
 			"ID INTEGER,"+ // 1<ID<=10 (Entraineur) /   ID>10 (Athlète)
 			"MOIS DATE,"+
 			"MONTANT DECIMAL(8,2),"+ //8 chifres dont 2 après la virgule
@@ -109,7 +109,7 @@ System.out.println("INFO -- Create table : "+myRequest);
 
 		try {
 			//Création de la table "ASSURANCE"
-			myRequest = "CREATE TABLE ASSURANCE ("+
+			myRequest = "CREATE TABLE IF NOT EXISTS ASSURANCE ("+
 			"ID INTEGER PRIMARY KEY,"+ // 1<ID<=10 (Entraineur) /   ID>10 (Athlète)
 			"debut DATE,"+
 			"fin DATE) ENGINE = InnoDB";
@@ -471,7 +471,6 @@ System.out.println("getATHLETE(id) : "+myRequest);
 			ArrayList<Object> ret = new ArrayList<Object>();
 			ret.add(0, "Problème de connection à la base de données");
 			paiements.add(0,ret);
-//			paiements.add(0, "Problème de connection à la base de données");
 		} else {
 			try {
 				String myRequest = "";
@@ -671,12 +670,10 @@ System.out.println("get_ASSURANCE : "+myRequest);
 		return assurance;
 	}
 	
-	//public static boolean check_ASSURANCE(Integer id, java.util.Date date) {
 	public static boolean check_ASSURANCE(Integer id, LocalDate date) {
 		boolean ret = false;
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String d = date.format(formatter);
-		//String d = Integer.valueOf(date.getYear()+1900).toString() + "-" + Integer.valueOf(date.getMonth()+1).toString() + "-" + Integer.valueOf(date.getDate()).toString();
 		Connection con = getConnection();
 		if (con != null) {
 			try {
@@ -894,7 +891,6 @@ System.out.println("init_PAIEMENT : " + myRequest);
 			ArrayList<Object> ret = new ArrayList<Object>();
 			ret.add(0, "Problème de connection à la base de données");
 			entraineurs.add(0,ret);
-//			entraineurs.add(0, "Problème de connection à la base de données");
 		} else {
 			try {
 				String myRequest = "";
@@ -1004,7 +1000,6 @@ System.out.println("getENTRAINEUR(id) : "+myRequest);
 	public static ArrayList<ArrayList<Object>> getENTRAINEUR_non_assures() {
 		ArrayList<ArrayList<Object>> entraineurs = new ArrayList<ArrayList<Object>>();
 
-		//java.util.Date date = new java.util.Date();
 		LocalDate date = LocalDate.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -1013,12 +1008,10 @@ System.out.println("getENTRAINEUR(id) : "+myRequest);
 			ArrayList<Object> ret = new ArrayList<Object>();
 			ret.add(0, "Problème de connection à la base de données");
 			entraineurs.add(0, ret);
-//			entraineurs.add(0, "Problème de connection à la base de données");
 		} else {
 			try {
 				String myRequest = "";
 				String d = date.format(formatter);
-//				String d = String.valueOf(date.getYear()+1900)+"-"+String.valueOf(date.getMonth()+1)+"-"+String.valueOf(date.getDate());
 				myRequest = "SELECT * FROM ASSURANCE WHERE ID < 11 AND FIN<'"+d+"'";
 //Afficher myRequest
 System.out.println("getENTRAINEUR_non_assures : "+myRequest);
@@ -1058,7 +1051,6 @@ System.out.println("getENTRAINEUR_non_assures : "+myRequest);
 	public static ArrayList<ArrayList<Object>> getATHLETE_non_assures() {
 		ArrayList<ArrayList<Object>> athletes = new ArrayList<ArrayList<Object>>();
 
-		//java.util.Date date = new java.util.Date();
 		LocalDate date = LocalDate.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -1067,7 +1059,6 @@ System.out.println("getENTRAINEUR_non_assures : "+myRequest);
 			ArrayList<Object> ret = new ArrayList<Object>();
 			ret.add(0, "Problème de connection à la base de données");
 			athletes.add(0, ret);
-			//athletes.add(0, "Problème de connection à la base de données");
 		} else {
 			try {
 				String myRequest = "";
@@ -1112,7 +1103,6 @@ System.out.println("getATHLETE_non_assures : "+myRequest);
 	public static ArrayList<Object> getATHLETE_non_payes() {
 		ArrayList<Object> athletes = new ArrayList<Object>();
 
-//		java.util.Date date = new java.util.Date();
 		LocalDate date = LocalDate.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-");
 		
@@ -1123,8 +1113,9 @@ System.out.println("getATHLETE_non_assures : "+myRequest);
 			try {
 				String myRequest = "";
 				String d = date.format(formatter);
-//				String d = String.valueOf(date.getYear()+1900)+"-"+String.valueOf(date.getMonth()+1)+"-01";
-				myRequest = "SELECT * FROM PAIEMENT WHERE ID>10 AND MOIS='"+d+"01' AND MONTANT=-1.00";
+				myRequest = "SELECT * FROM athlete LEFT JOIN paiement ON paiement.ID = athlete.ID WHERE paiement.ID IS NULL "+
+						"UNION "+
+						"SELECT * FROM athlete,paiement WHERE athlete.ID=paiement.ID AND athlete.ID>10 AND paiement.MOIS='"+d+"01' AND paiement.MONTANT=-1.00";
 //Afficher myRequest
 System.out.println("getATHLETE_non_payes : "+myRequest);
 

@@ -1,14 +1,14 @@
 Sur Git Bash
 ------------
-cd Documents/Univ_Batna/Master II - IAM/Projets/Projets_2018_2019/Projet_01/Application/
+cd MyDevs\EspaceJava\Projects_On_Github\gestion_club_sportif/
 git config --global user.email "larbi.guezouli@univ-batna2.dz"	//use your account
 git config --global http.sslverify "false"						//Pour ignorer les vérifications ssl
-sudo git clone https://github.com/glarbi/driver_assistance_system.git
+sudo git clone https://github.com/glarbi/gestion_club_sportif.git
 
 
 Prendre possession du répertoire (Be the owner of the directory)
 --------------------------------
-sudo chown -R larbi driver_assistance_system/
+sudo chown -R larbi gestion_club_sportif/
 
 
 Send to repository:
@@ -21,10 +21,10 @@ git push							//Update the remote repository with your local changes.
 
 Verify and get changes made by another user:
 --------------------------------------------
-cd driver_assistance_system
+cd gestion_club_sportif
 git status
-git fetch https://github.com/glarbi/driver_assistance_system.git	(pour vérifier les modifications)
-git pull https://github.com/glarbi/driver_assistance_system.git	(pour récupérer les modufications)
+git fetch https://github.com/glarbi/gestion_club_sportif.git	(pour vérifier les modifications)
+git pull https://github.com/glarbi/gestion_club_sportif.git	(pour récupérer les modufications)
 
 
 Utiliser une branche:
@@ -32,12 +32,13 @@ Utiliser une branche:
 git branch myBranch			//Create new branch
 git checkout myBranch		//Switch to the new branch
 
-or relace both commands
+or replace both commands
 
 git checkout -b myBranch	//Create branch and switch to it
 
 git branch					//To list branches and view actual branch
 
+//Do something (add, commit, push...) on the new branch...
 
 git checkout master			//Switch to the master branch
 git merge myBranch			//Merge the branch to the master
