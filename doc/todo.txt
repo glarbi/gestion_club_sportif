@@ -1,2 +1,3 @@
 * Faire sortir le nom du club dans un fichier de confugration
 * Utiliser l'arabe
+* Liste des téléphones
