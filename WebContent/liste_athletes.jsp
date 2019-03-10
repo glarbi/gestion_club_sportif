@@ -19,9 +19,9 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="assets/css/main.css" />
-<script type="text/javascript" src="jszip.js"></script>
-<script type="text/javascript" src="FileSaver.js"></script>
-<script type="text/javascript" src="myexcel.js"></script>
+<script type="text/javascript" src="assets/js/jszip.js"></script>
+<script type="text/javascript" src="assets/js/FileSaver.js"></script>
+<script type="text/javascript" src="assets/js/myexcel.js"></script>
 </head>
 <body class="is-preload no-sidebar">
 	<div id="page-wrapper">
@@ -87,8 +87,8 @@
 
 					<br />
 					<input type="button" id="exportbtn" value="Exporter la liste" onclick="download_Athletes('Liste_Athletes.xlsx');" />
-					<script src="myScripts.js"></script>
-					<script src="scriptExcel_Liste_Athletes.js"></script>
+					<script src="assets/js/myScripts.js"></script>
+					<script src="assets/js/scriptExcel_Liste_Athletes.js"></script>
 					<br /> <br />
 
 					<table border="1">

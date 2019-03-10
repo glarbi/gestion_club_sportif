@@ -17,9 +17,9 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="assets/css/main.css" />
-<script type="text/javascript" src="jszip.js"></script>
-<script type="text/javascript" src="FileSaver.js"></script>
-<script type="text/javascript" src="myexcel.js"></script>
+<script type="text/javascript" src="assets/js/jszip.js"></script>
+<script type="text/javascript" src="assets/js/FileSaver.js"></script>
+<script type="text/javascript" src="assets/js/myexcel.js"></script>
 </head>
 
 <body class="is-preload no-sidebar">
@@ -70,7 +70,7 @@
 			<div class="container">
 				<div id="content">
 
-					<script src="scriptExcel_Liste_Athletes_non_Payes.js"></script>
+					<script src="assets/js/scriptExcel_Liste_Athletes_non_Payes.js"></script>
 					<h2
 						style="color: white; background-color: #6683b1; text-align: center">Liste
 						des athlètes en retard de paiement</h2>
@@ -119,7 +119,7 @@
 					</table>
 					<br /> <br /> <input type="button" id="exportbtn" value="Exporter la liste"
 						onclick="download_Athletes_non_Payes('Liste_Athletes_non_Payes.xlsx');" />
-					<script src="myScripts.js"></script>
+					<script src="assets/js/myScripts.js"></script>
 
 					<br /> <br /> <br />
 				</div>
