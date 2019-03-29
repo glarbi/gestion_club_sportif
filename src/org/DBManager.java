@@ -21,7 +21,7 @@ public class DBManager {
 		try {
 			Context context = new InitialContext();
 			//DataSource ds = (DataSource) context.lookup("java:comp/env/jdbc/GCSDB");  //to use H2 datasource
-			DataSource ds = (DataSource) context.lookup("java:jboss/datasources/gcsdb");
+			DataSource ds = (DataSource) context.lookup("java:jboss/datasources/GCSDB");
 			con = ds.getConnection();
 		} catch (NamingException e) {
 			e.printStackTrace();
@@ -43,9 +43,9 @@ public class DBManager {
 		String myRequest = "";
 		PreparedStatement pStmt;
 		try {
-			//Création de la table "ATHLETE"
+			//Crï¿½ation de la table "ATHLETE"
 			myRequest = "CREATE TABLE IF NOT EXISTS ATHLETE ("+
-			"ID INTEGER PRIMARY KEY,"+ // Identifiant athlète (11-infini)
+			"ID INTEGER PRIMARY KEY,"+ // Identifiant athlï¿½te (11-infini)
 			"NOM VARCHAR(30) NOT NULL,"+
 			"PRENOM VARCHAR(30) NOT NULL,"+
 			"DATE_NAIS DATE,"+
@@ -70,7 +70,7 @@ System.out.println("INFO -- Create table : "+myRequest);
 		}
 
 		try {
-			//Création de la table "ENTRAINEUR"
+			//Crï¿½ation de la table "ENTRAINEUR"
 			myRequest = "CREATE TABLE IF NOT EXISTS ENTRAINEUR ("+
 			"ID INTEGER PRIMARY KEY,"+ // Identifiant entraineur (1-10)
 			"NOM VARCHAR(30) NOT NULL,"+
@@ -91,11 +91,11 @@ System.out.println("INFO -- Create table : "+myRequest);
 		}
 
 		try {
-			//Création de la table "PAIEMENT"
+			//Crï¿½ation de la table "PAIEMENT"
 			myRequest = "CREATE TABLE IF NOT EXISTS PAIEMENT ("+
-			"ID INTEGER,"+ // 1<ID<=10 (Entraineur) /   ID>10 (Athlète)
+			"ID INTEGER,"+ // 1<ID<=10 (Entraineur) /   ID>10 (Athlï¿½te)
 			"MOIS DATE,"+
-			"MONTANT DECIMAL(8,2),"+ //8 chifres dont 2 après la virgule
+			"MONTANT DECIMAL(8,2),"+ //8 chifres dont 2 aprï¿½s la virgule
 			"PRIMARY KEY (ID,MOIS)) ENGINE = InnoDB";
 //Afficher myRequest
 System.out.println("INFO -- Create table : "+myRequest);
@@ -108,9 +108,9 @@ System.out.println("INFO -- Create table : "+myRequest);
 		}
 
 		try {
-			//Création de la table "ASSURANCE"
+			//Crï¿½ation de la table "ASSURANCE"
 			myRequest = "CREATE TABLE IF NOT EXISTS ASSURANCE ("+
-			"ID INTEGER PRIMARY KEY,"+ // 1<ID<=10 (Entraineur) /   ID>10 (Athlète)
+			"ID INTEGER PRIMARY KEY,"+ // 1<ID<=10 (Entraineur) /   ID>10 (Athlï¿½te)
 			"debut DATE,"+
 			"fin DATE) ENGINE = InnoDB";
 //Afficher myRequest
@@ -339,7 +339,7 @@ System.out.println("setEntraineur3 : "+myRequest);
 		Connection con = getConnection();
 		if (con == null) {
 			ArrayList<Object> ret = new ArrayList<Object>();
-			ret.add(0, "Problème de connection à la base de données");
+			ret.add(0, "Problï¿½me de connection ï¿½ la base de donnï¿½es");
 			athletes.add(0, ret);
 		} else {
 			try {
@@ -347,7 +347,7 @@ System.out.println("setEntraineur3 : "+myRequest);
 				if ((id != null && nom != null && prenom != null
 					&& id == 0 && nom.isEmpty() && prenom.isEmpty()) ||
 					(id != null && nom != null && prenom != null
-					&& id == 0 && nom.equals("Tapez le nom de l_athlète") && prenom.equals("Tapez le prénom de l_athlète"))){
+					&& id == 0 && nom.equals("Tapez le nom de l_athlï¿½te") && prenom.equals("Tapez le prï¿½nom de l_athlï¿½te"))){
 					myRequest = "SELECT * FROM ATHLETE";
 				} else {
 					myRequest = "SELECT * FROM ATHLETE WHERE ";
@@ -355,9 +355,9 @@ System.out.println("setEntraineur3 : "+myRequest);
 						myRequest = myRequest + "ID=0";
 					else
 						myRequest = myRequest + "ID=" + id.toString();
-					if (nom!=null && !nom.isEmpty() && !nom.equals("Tapez le nom de l_athlète")) 
+					if (nom!=null && !nom.isEmpty() && !nom.equals("Tapez le nom de l_athlï¿½te")) 
 						myRequest = myRequest + " OR NOM='" + nom + "'";
-					if (prenom!=null && !prenom.isEmpty() && !prenom.equals("Tapez le prénom de l_athlète")) 
+					if (prenom!=null && !prenom.isEmpty() && !prenom.equals("Tapez le prï¿½nom de l_athlï¿½te")) 
 						myRequest = myRequest + " OR PRENOM='" + prenom + "'";
 				}
 				if (!myRequest.isEmpty()) myRequest = myRequest + " ORDER BY ID ASC";
@@ -469,7 +469,7 @@ System.out.println("getATHLETE(id) : "+myRequest);
 		Connection con = getConnection();
 		if (con == null) {
 			ArrayList<Object> ret = new ArrayList<Object>();
-			ret.add(0, "Problème de connection à la base de données");
+			ret.add(0, "Problï¿½me de connection ï¿½ la base de donnï¿½es");
 			paiements.add(0,ret);
 		} else {
 			try {
@@ -626,7 +626,7 @@ System.out.println("set_PAIEMENT : "+myRequest);
 
 		Connection con = getConnection();
 		if (con == null) {
-			assurance.add(0, "Problème de connection à la base de données");
+			assurance.add(0, "Problï¿½me de connection ï¿½ la base de donnï¿½es");
 		} else {
 			try {
 				String myRequest = "";
@@ -889,7 +889,7 @@ System.out.println("init_PAIEMENT : " + myRequest);
 		Connection con = getConnection();
 		if (con == null) {
 			ArrayList<Object> ret = new ArrayList<Object>();
-			ret.add(0, "Problème de connection à la base de données");
+			ret.add(0, "Problï¿½me de connection ï¿½ la base de donnï¿½es");
 			entraineurs.add(0,ret);
 		} else {
 			try {
@@ -897,7 +897,7 @@ System.out.println("init_PAIEMENT : " + myRequest);
 				if ((id != null && nom != null && prenom != null
 					&& id == 0 && nom.isEmpty() && prenom.isEmpty()) ||
 					(id != null && nom != null && prenom != null
-					&& id == 0 && nom.equals("Tapez le nom de l_entraineur") && prenom.equals("Tapez le prénom de l_entraineur"))){
+					&& id == 0 && nom.equals("Tapez le nom de l_entraineur") && prenom.equals("Tapez le prï¿½nom de l_entraineur"))){
 					myRequest = "SELECT * FROM ENTRAINEUR";
 				} else {
 					myRequest = "SELECT * FROM ENTRAINEUR WHERE ";
@@ -907,7 +907,7 @@ System.out.println("init_PAIEMENT : " + myRequest);
 						myRequest = myRequest + "ID=" + id.toString();
 					if (nom!=null && !nom.isEmpty() && !nom.equals("Tapez le nom de l_entraineur")) 
 						myRequest = myRequest + " OR NOM='" + nom + "'";
-					if (prenom!=null && !prenom.isEmpty() && !prenom.equals("Tapez le prénom de l_entraineur")) 
+					if (prenom!=null && !prenom.isEmpty() && !prenom.equals("Tapez le prï¿½nom de l_entraineur")) 
 						myRequest = myRequest + " OR PRENOM='" + prenom + "'";
 				}
 				myRequest = myRequest + " ORDER BY ID ASC";
@@ -1006,7 +1006,7 @@ System.out.println("getENTRAINEUR(id) : "+myRequest);
 		Connection con = getConnection();
 		if (con == null) {
 			ArrayList<Object> ret = new ArrayList<Object>();
-			ret.add(0, "Problème de connection à la base de données");
+			ret.add(0, "Problï¿½me de connection ï¿½ la base de donnï¿½es");
 			entraineurs.add(0, ret);
 		} else {
 			try {
@@ -1057,7 +1057,7 @@ System.out.println("getENTRAINEUR_non_assures : "+myRequest);
 		Connection con = getConnection();
 		if (con == null) {
 			ArrayList<Object> ret = new ArrayList<Object>();
-			ret.add(0, "Problème de connection à la base de données");
+			ret.add(0, "Problï¿½me de connection ï¿½ la base de donnï¿½es");
 			athletes.add(0, ret);
 		} else {
 			try {
@@ -1108,7 +1108,7 @@ System.out.println("getATHLETE_non_assures : "+myRequest);
 		
 		Connection con = getConnection();
 		if (con == null) {
-			athletes.add("Problème de connection à la base de données");
+			athletes.add("Problï¿½me de connection ï¿½ la base de donnï¿½es");
 		} else {
 			try {
 				String myRequest = "";
