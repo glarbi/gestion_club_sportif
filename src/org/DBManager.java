@@ -58,7 +58,7 @@ public class DBManager {
 			"ADRESSE VARCHAR(1024) NOT NULL,"+
 			"NUM_TEL VARCHAR(30) NOT NULL,"+
 			"DATE_INSCRIPTION DATE,"+
-			"IMG_PATH VARCHAR(1024)) ENGINE = InnoDB";
+			"IMG_PATH VARCHAR(1024)) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
 //Afficher myRequest
 System.out.println("INFO -- Create table : "+myRequest);
 			pStmt = con.prepareStatement(myRequest);
@@ -79,7 +79,7 @@ System.out.println("INFO -- Create table : "+myRequest);
 			"LIEU_NAIS VARCHAR(30) NOT NULL,"+
 			"ADRESSE VARCHAR(1024) NOT NULL,"+
 			"NUM_TEL VARCHAR(30) NOT NULL,"+
-			"DATE_INSCRIPTION DATE) ENGINE = InnoDB";
+			"DATE_INSCRIPTION DATE) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
 //Afficher myRequest
 System.out.println("INFO -- Create table : "+myRequest);
 			pStmt = con.prepareStatement(myRequest);
@@ -798,7 +798,7 @@ System.out.println("init_PAIEMENT : "+myRequest);
 					}
 					else
 					{
-						myRequest = "INSERT INTO PAIEMENT (ID,MOIS,MONTANT) VALUES ("+id.toString()+",'2011/10/01,-1.00)";
+						myRequest = "INSERT INTO PAIEMENT (ID,MOIS,MONTANT) VALUES ("+id.toString()+",'2011/10/01',-1.00)";
 //Afficher myRequest
 System.out.println("init_PAIEMENT : "+myRequest);
 						pStmt = con.prepareStatement(myRequest);
