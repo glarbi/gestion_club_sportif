@@ -1,0 +1,7 @@
+Name: GCSDB
+JNDI Name : java:jboss/datasources/GCSDB
+Choisir le driver: mysql-connector-java-5.1.40-bin.jar_com.mysql.jdbc.Driver_5_1
+Connection URL: jdbc:mysql://localhost:3306/GCSDB
+Username: root
+Password:123
+Security domain: 
