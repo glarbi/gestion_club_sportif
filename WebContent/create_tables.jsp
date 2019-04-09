@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ page import="org.*"%>
 
 <!DOCTYPE HTML>
@@ -30,33 +30,33 @@
 					<h1>
 						<a href="index.html">CRMB</a>
 					</h1>
-					<span>Chabab Riadhi Médine de Batna</span>
+					<span>Chabab Riadhi MÃ©dine de Batna</span>
 				</div>
 
 				<!-- Nav -->
 				<nav id="nav">
 					<ul>
 						<li class="current"><a href="index.html">Principale</a></li>
-						<li><a href="#">Athlètes</a>
+						<li><a href="#">AthlÃ¨tes</a>
 							<ul>
-								<li><a href="liste_athletes.jsp">Liste des athlètes</a></li>
+								<li><a href="liste_athletes.jsp">Liste des athlÃ¨tes</a></li>
 								<li><a href="liste_athletes_non_assures.jsp">Liste des
-										athlètes non assurés</a></li>
+										athlÃ¨tes non assurÃ©s</a></li>
 								<li><a href="liste_athletes_non_payes.jsp">Liste des
-										athlètes en retard de paiement</a></li>
-								<li><a href="athlete.jsp">Créer un nouveau dossier
-										d'athlète</a></li>
+										athlÃ¨tes en retard de paiement</a></li>
+								<li><a href="athlete.jsp">CrÃ©er un nouveau dossier
+										d'athlÃ¨te</a></li>
 							</ul></li>
 						<li><a href="#">Entraineurs</a>
 							<ul>
 								<li><a href="liste_entraineurs.jsp">Liste des
 										entraineurs</a></li>
 								<li><a href="liste_entraineurs_non_assures.jsp">Liste
-										des entraineurs non assurés</a></li>
-								<li><a href="entraineur.jsp">Créer un nouveau dossier
+										des entraineurs non assurÃ©s</a></li>
+								<li><a href="entraineur.jsp">CrÃ©er un nouveau dossier
 										d'entraineurs</a></li>
 							</ul></li>
-						<li><a href="create_tables.jsp">Création de la BDD</a></li>
+						<li><a href="create_tables.jsp">CrÃ©ation de la BDD</a></li>
 					</ul>
 				</nav>
 			</header>
@@ -70,15 +70,15 @@
 						int ret = DBManager.creatTables();
 						if (ret == 0) {
 					%>
-					<font color="blue" , size="5"> Tables créées avec succès dans
-						la base de données ou déjà créées. <br /> <br />
-					</font> <a href="index.html">Retour à la page d'acceuil</a>
+					<font color="blue" , size="5"> Tables crÃ©Ã©es avec succÃ¨s dans
+						la base de donnÃ©es ou dÃ©jÃ  crÃ©Ã©es. <br /> <br />
+					</font> <a href="index.html">Retour Ã  la page d'acceuil</a>
 					<%
 						} else {
 					%>
-					<font color="red" , size="5"> Tables déjà créées ou Problème
-						de cération des tables dans la base de données.<br /> <br /> <br />
-					</font> <a href="index.html">Retour à la page d'acceuil</a>
+					<font color="red" , size="5"> Tables dÃ©jÃ  crÃ©Ã©es ou ProblÃ¨me
+						de cÃ©ration des tables dans la base de donnÃ©es.<br /> <br /> <br />
+					</font> <a href="index.html">Retour Ã  la page d'acceuil</a>
 					<%
 						}
 					%>

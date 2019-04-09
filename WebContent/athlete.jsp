@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.List"%>
 <%@ page import="org.*"%>
@@ -35,33 +35,33 @@
 					<h1>
 						<a href="index.html">CRMB</a>
 					</h1>
-					<span>Chabab Riadhi Médine de Batna</span>
+					<span>Chabab Riadhi MÃ©dine de Batna</span>
 				</div>
 
 				<!-- Nav -->
 				<nav id="nav">
 					<ul>
 						<li class="current"><a href="index.html">Principale</a></li>
-						<li><a href="#">Athlètes</a>
+						<li><a href="#">AthlÃ¨tes</a>
 							<ul>
-								<li><a href="liste_athletes.jsp">Liste des athlètes</a></li>
+								<li><a href="liste_athletes.jsp">Liste des athlÃ¨tes</a></li>
 								<li><a href="liste_athletes_non_assures.jsp">Liste des
-										athlètes non assurés</a></li>
+										athlÃ¨tes non assurÃ©s</a></li>
 								<li><a href="liste_athletes_non_payes.jsp">Liste des
-										athlètes en retard de paiement</a></li>
-								<li><a href="athlete.jsp">Créer un nouveau dossier
-										d'athlète</a></li>
+										athlÃ¨tes en retard de paiement</a></li>
+								<li><a href="athlete.jsp">CrÃ©er un nouveau dossier
+										d'athlÃ¨te</a></li>
 							</ul></li>
 						<li><a href="#">Entraineurs</a>
 							<ul>
 								<li><a href="liste_entraineurs.jsp">Liste des
 										entraineurs</a></li>
 								<li><a href="liste_entraineurs_non_assures.jsp">Liste
-										des entraineurs non assurés</a></li>
-								<li><a href="entraineur.jsp">Créer un nouveau dossier
+										des entraineurs non assurÃ©s</a></li>
+								<li><a href="entraineur.jsp">CrÃ©er un nouveau dossier
 										d'entraineurs</a></li>
 							</ul></li>
-						<li><a href="create_tables.jsp">Création de la BDD</a></li>
+						<li><a href="create_tables.jsp">CrÃ©ation de la BDD</a></li>
 					</ul>
 				</nav>
 			</header>
@@ -134,7 +134,7 @@
 							try {
 								Integer t1int = Integer.parseInt(t1);
 								DBManager.setATHLETE(t1int, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
-								t1 = null; //Pour faire entrer un nouveau athlète
+								t1 = null; //Pour faire entrer un nouveau athlÃ¨te
 							} catch (java.lang.NumberFormatException e) {
 								System.out.println("Exception : " + e.getMessage());
 							}
@@ -142,12 +142,10 @@
 
 						if (t1 == null)
 							t1 = DBManager.getFreeAthleteID().toString();
-						//java.util.Date date = new java.util.Date();
 						LocalDate date = LocalDate.now();
 						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 						String today = date.format(formatter);
 
-						//String today = String.valueOf(date.getYear()+1900)+"-"+String.valueOf(date.getMonth()+1)+"-"+String.valueOf(date.getDate());
 						ATHLETE myAthlete = new ATHLETE(t1, "_", "_", "1990-01-01", "_", "_", "_", today, "_", "_", "_", "_", "_");
 						Integer day = null;
 						Integer month = null;
@@ -185,7 +183,7 @@
 					<form name="athleteForm" method="get"
 						style="width: 50%; margin: auto; background-color: #c1d9fc; padding-bottom: 15px;" accept-charset="UTF-8">
 						<p align="center">
-						<h2>Informations de l'athlète</h2>
+						<h2>Informations de l'athlÃ¨te</h2>
 						</p>
 						<table>
 							<tr>
@@ -201,7 +199,7 @@
 							</tr>
 							<tr>
 								<th>
-									<p align="left">Nom de l'athlète :</p>
+									<p align="left">Nom de l'athlÃ¨te :</p>
 								</th>
 								<th>
 									<p>
@@ -212,7 +210,7 @@
 							</tr>
 							<tr>
 								<th>
-									<p align="left">Prénom de l'athlète :</p>
+									<p align="left">PrÃ©nom de l'athlÃ¨te :</p>
 								</th>
 								<th>
 									<p>
@@ -261,7 +259,7 @@
 											}
 											}
 										%>
-								</select> Année : <select name="Year_naissance">
+								</select> AnnÃ©e : <select name="Year_naissance">
 										<%
 											for (int i = 0; i < yearList.size(); i++) {
 												if (year.equals(yearList.get(i))) {
@@ -291,7 +289,7 @@
 							</tr>
 							<tr>
 								<th>
-									<p align="left">Prénom du père :</p>
+									<p align="left">PrÃ©nom du pÃ¨re :</p>
 								</th>
 								<th>
 									<p>
@@ -302,7 +300,7 @@
 							</tr>
 							<tr>
 								<th>
-									<p align="left">Profession du père :</p>
+									<p align="left">Profession du pÃ¨re :</p>
 								</th>
 								<th>
 									<p>
@@ -313,7 +311,7 @@
 							</tr>
 							<tr>
 								<th>
-									<p align="left">Nom de la mère :</p>
+									<p align="left">Nom de la mÃ¨re :</p>
 								</th>
 								<th>
 									<p>
@@ -324,7 +322,7 @@
 							</tr>
 							<tr>
 								<th>
-									<p align="left">Prénom de la mère :</p>
+									<p align="left">PrÃ©nom de la mÃ¨re :</p>
 								</th>
 								<th>
 									<p>
@@ -335,7 +333,7 @@
 							</tr>
 							<tr>
 								<th>
-									<p align="left">Profession de la mère :</p>
+									<p align="left">Profession de la mÃ¨re :</p>
 								</th>
 								<th>
 									<p>
@@ -357,7 +355,7 @@
 							</tr>
 							<tr>
 								<th>
-									<p align="left">Téléphone :</p>
+									<p align="left">TÃ©lÃ©phone :</p>
 								</th>
 								<th>
 									<p>
@@ -406,7 +404,7 @@
 											}
 											}
 										%>
-								</select> Année : <select name="Year_inscription">
+								</select> AnnÃ©e : <select name="Year_inscription">
 										<%
 											for (int i = 0; i < yearList.size(); i++) {
 												if (year.equals(yearList.get(i))) {
