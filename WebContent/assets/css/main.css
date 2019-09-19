@@ -1500,8 +1500,8 @@ input, select, textarea {
 	form select,
 	form textarea {
 		-webkit-appearance: none;
-		display: block;
-		width: 100%;
+		display: inline-block;
+		width: 80%;
 		border-radius: 8px;
 		border: solid 1px #eee;
 	}

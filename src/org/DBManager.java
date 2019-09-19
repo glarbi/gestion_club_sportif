@@ -1,5 +1,6 @@
 package org;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.*;
@@ -9,6 +10,10 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
 
 import java.util.ArrayList;
 import java.sql.PreparedStatement;
@@ -746,6 +751,26 @@ System.out.println("set_ASSURANCE : "+myRequest);
 		}
 	}
 	
+	public static void init_for_all_ASSURANCE_PAIEMENT() {
+		// Pour les entraineurs
+		Integer lastId = getFreeEntraineurID();
+		for (int id = 1; id < lastId; id++) {
+			//Initialisation de l'assurance
+			init_ASSURANCE(id);
+			//Initialisation du paiement
+			init_PAIEMENT(id);		
+		}
+		
+		//Pour les athlètes
+		lastId = getFreeAthleteID();
+		for (int id = 10; id < lastId; id++) {
+			//Initialisation de l'assurance
+			init_ASSURANCE(id);
+			//Initialisation du paiement
+			init_PAIEMENT(id);		
+		}
+	}
+	
 	public static void init_ASSURANCE(Integer id) {
 		Connection con = getConnection();
 		if (con != null) {
@@ -780,7 +805,26 @@ System.out.println("set_ASSURANCE : "+myRequest);
 		}
 	}
 	
+	public static int getYearFromConfig(String configFileName) {
+		try {
+
+			File fXmlFile = new File(configFileName);
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(fXmlFile);
+			doc.getDocumentElement().normalize();
+System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+			String yearStr = doc.getElementsByTagName("SEASON_YEAR").item(0).getTextContent().replaceAll(" ", "").replaceAll("\n", "");
+			Integer yearInt = Integer.parseInt(yearStr.substring(0, 4));
+			return yearInt;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
 	public static void init_PAIEMENT(Integer id) {
+		int season_year = getYearFromConfig("..\\standalone\\deployments\\GCSWeb.war\\config.xml");
 		Connection con = getConnection();
 		if (con != null) {
 			try {
@@ -798,70 +842,77 @@ System.out.println("init_PAIEMENT : "+myRequest);
 					}
 					else
 					{
-						myRequest = "INSERT INTO PAIEMENT (ID,MOIS,MONTANT) VALUES ("+id.toString()+",'2011/10/01',-1.00)";
+						myRequest = "INSERT INTO PAIEMENT (ID,MOIS,MONTANT) VALUES (" + id.toString() + ",'" + season_year + "/09/01',-1.00)";
 //Afficher myRequest
 System.out.println("init_PAIEMENT : "+myRequest);
 						pStmt = con.prepareStatement(myRequest);
 						pStmt.executeUpdate();
 						pStmt.close();
 						
-						myRequest = "INSERT INTO PAIEMENT (ID,MOIS,MONTANT) VALUES ("+id.toString()+",'2011/11/01',-1.00)";
+						myRequest = "INSERT INTO PAIEMENT (ID,MOIS,MONTANT) VALUES (" + id.toString() + ",'" + season_year + "/10/01',-1.00)";
+//Afficher myRequest
+System.out.println("init_PAIEMENT : "+myRequest);
+						pStmt = con.prepareStatement(myRequest);
+						pStmt.executeUpdate();
+						pStmt.close();
+						
+						myRequest = "INSERT INTO PAIEMENT (ID,MOIS,MONTANT) VALUES (" + id.toString() + ",'" + season_year + "/11/01',-1.00)";
 //Afficher myRequest
 System.out.println("init_PAIEMENT : "+myRequest);
 						pStmt = con.prepareStatement(myRequest);
 						pStmt.executeUpdate();
 						pStmt.close();
 
-						myRequest = "INSERT INTO PAIEMENT (ID,MOIS,MONTANT) VALUES ("+id.toString()+",'2011/12/01',-1.00)";
+						myRequest = "INSERT INTO PAIEMENT (ID,MOIS,MONTANT) VALUES (" + id.toString() + ",'" + season_year + "/12/01',-1.00)";
 //Afficher myRequest
 System.out.println("init_PAIEMENT : "+myRequest);
 						pStmt = con.prepareStatement(myRequest);
 						pStmt.executeUpdate();
 						pStmt.close();
 
-						myRequest = "INSERT INTO PAIEMENT (ID,MOIS,MONTANT) VALUES ("+ id.toString() + ",'2012/01/01',-1.00)";
+						myRequest = "INSERT INTO PAIEMENT (ID,MOIS,MONTANT) VALUES (" + id.toString() + ",'" + (season_year+1) + "/01/01',-1.00)";
 // Afficher myRequest
 System.out.println("init_PAIEMENT : " + myRequest);
 						pStmt = con.prepareStatement(myRequest);
 						pStmt.executeUpdate();
 						pStmt.close();
 
-						myRequest = "INSERT INTO PAIEMENT (ID,MOIS,MONTANT) VALUES ("+ id.toString() + ",'2012/02/01',-1.00)";
+						myRequest = "INSERT INTO PAIEMENT (ID,MOIS,MONTANT) VALUES (" + id.toString() + ",'" + (season_year+1) + "/02/01',-1.00)";
 // Afficher myRequest
 System.out.println("init_PAIEMENT : " + myRequest);
 						pStmt = con.prepareStatement(myRequest);
 						pStmt.executeUpdate();
 						pStmt.close();
 
-						myRequest = "INSERT INTO PAIEMENT (ID,MOIS,MONTANT) VALUES ("+ id.toString() + ",'2012/03/01',-1.00)";
+						myRequest = "INSERT INTO PAIEMENT (ID,MOIS,MONTANT) VALUES (" + id.toString() + ",'" + (season_year+1) + "/03/01',-1.00)";
 // Afficher myRequest
 System.out.println("init_PAIEMENT : " + myRequest);
 						pStmt = con.prepareStatement(myRequest);
 						pStmt.executeUpdate();
 						pStmt.close();
 
-						myRequest = "INSERT INTO PAIEMENT (ID,MOIS,MONTANT) VALUES ("+ id.toString() + ",'2012/04/01',-1.00)";
+						myRequest = "INSERT INTO PAIEMENT (ID,MOIS,MONTANT) VALUES (" + id.toString() + ",'" + (season_year+1) + "/04/01',-1.00)";
 // Afficher myRequest
 System.out.println("init_PAIEMENT : " + myRequest);
 						pStmt = con.prepareStatement(myRequest);
 						pStmt.executeUpdate();
 						pStmt.close();
 
-						myRequest = "INSERT INTO PAIEMENT (ID,MOIS,MONTANT) VALUES ("+ id.toString() + ",'2012/05/01',-1.00)";
+						myRequest = "INSERT INTO PAIEMENT (ID,MOIS,MONTANT) VALUES (" + id.toString() + ",'" + (season_year+1) + "/05/01',-1.00)";
 // Afficher myRequest
 System.out.println("init_PAIEMENT : " + myRequest);
 						pStmt = con.prepareStatement(myRequest);
 						pStmt.executeUpdate();
 						pStmt.close();
 
-						myRequest = "INSERT INTO PAIEMENT (ID,MOIS,MONTANT) VALUES ("+ id.toString() + ",'2012/06/01',-1.00)";
+						myRequest = "INSERT INTO PAIEMENT (ID,MOIS,MONTANT) VALUES (" + id.toString() + ",'" + (season_year+1) + "/06/01',-1.00)";
 // Afficher myRequest
 System.out.println("init_PAIEMENT : " + myRequest);
 						pStmt = con.prepareStatement(myRequest);
 						pStmt.executeUpdate();
 						pStmt.close();
 
-						myRequest = "INSERT INTO PAIEMENT (ID,MOIS,MONTANT) VALUES ("+ id.toString() + ",'2012/07/01',-1.00)";
+						myRequest = "INSERT INTO PAIEMENT (ID,MOIS,MONTANT) VALUES (" + id.toString() + ",'" + (season_year+1) + "/07/01',-1.00)";
 // Afficher myRequest
 System.out.println("init_PAIEMENT : " + myRequest);
 						pStmt = con.prepareStatement(myRequest);

@@ -74,9 +74,9 @@
 						style="width: 50%; margin: auto; background-color: #c1d9fc; padding-bottom: 15px;">
 						<div>
 							<h2 style="color: white; background-color: #6683b1; text-align: center">CHERCHER UN ATHLETE</h2>
-							Nom : <input type="text" name="nom" style="color: graytext" align="right" />
-							Prenom : <input type="text" name="prenom" style="color: graytext" align="right" />
-							ID : <input type="text" name="id" style="color: graytext" value="0" size=25 align="right" />
+							Nom : <input type="text" name="nom" style="color: graytext"/>
+							Prenom : <input type="text" name="prenom" style="color: graytext"/>
+							ID : <input type="text" name="id" style="color: graytext" value="0" size=25/>
 							</br>
 							<div style="width: 50%; margin: auto;">
 								<input type="submit" name="OK" value="OK" />&emsp;&emsp;&emsp;&emsp;
@@ -94,8 +94,7 @@
 					<table border="1">
 						<caption>
 							<h2
-								style="color: white; background-color: #6683b1; text-align: center">Liste
-								des athlètes</h2>
+								style="color: white; background-color: #6683b1; text-align: center">Liste des athlètes</h2>
 						</caption>
 						<tr>
 							<!-- ligne1 -->

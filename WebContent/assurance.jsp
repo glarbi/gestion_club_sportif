@@ -70,6 +70,14 @@
 				<div id="content">
 
 					<%
+						Integer year_start = 2018;
+						Integer day_begin = 1;
+						Integer month_begin = 1;
+						Integer year_begin = 2018;
+						Integer day_end = 1;
+						Integer month_end = 1;
+						Integer year_end = 2018;
+
 						List<Integer> dayList = new ArrayList<Integer>();
 						for (int i = 0; i < 31; i++)
 							dayList.add(i, Integer.valueOf(i + 1));
@@ -80,9 +88,9 @@
 
 						List<Integer> yearList = new ArrayList<Integer>();
 						for (int i = 0; i < 30; i++)
-							yearList.add(i, Integer.valueOf(i + 1990));
+							yearList.add(i, Integer.valueOf(i + year_start));
 
-						PERSONNE myPersonne = new PERSONNE("_", "_", "_", "01/01/1990", "_", "_", "_", "01/01/1990");
+						PERSONNE myPersonne = new PERSONNE("_", "_", "_", "01/01/"+year_start, "_", "_", "_", "01/01/"+year_start);
 						String idStr = request.getParameter("ID");
 						Integer idInt = null;
 						if (idStr == null)
@@ -94,13 +102,6 @@
 								System.out.println("Exception : " + e.getMessage());
 							}
 						}
-
-						Integer day_begin = 1;
-						Integer month_begin = 1;
-						Integer year_begin = 1990;
-						Integer day_end = 1;
-						Integer month_end = 1;
-						Integer year_end = 1990;
 
 						if (idInt > 0) {
 							ArrayList<Object> assurance = DBManager.get_ASSURANCE(idInt);
@@ -134,11 +135,12 @@
 						if (tmp != null)
 							month_end = Integer.valueOf(tmp);
 						tmp = request.getParameter("Year_end");
-						if (tmp != null)
+						if (tmp != null) {
 							year_end = Integer.valueOf(tmp);
+							}
 
-						if (!(day_begin == 1 && month_begin == 1 && year_begin == 1990 && day_end == 1 && month_end == 1
-								&& year_end == 1990)) {
+						if (!(day_begin == 1 && month_begin == 1 && year_begin == year_start && day_end == 1 && month_end == 1
+								&& year_end == year_start)) {
 							DBManager.set_ASSURANCE(idInt,
 									year_begin.toString() + "/" + month_begin.toString() + "/" + day_begin.toString(),
 									year_end.toString() + "/" + month_end.toString() + "/" + day_end.toString());
@@ -276,11 +278,11 @@
 											for (int i = 0; i < yearList.size(); i++) {
 												if (year_begin.equals(yearList.get(i))) {
 										%>
-										<option value=<%=1990 + i%> selected><%=yearList.get(i)%></option>
+										<option value=<%=year_start + i%> selected><%=yearList.get(i)%></option>
 										<%
 											} else {
 										%>
-										<option value=<%=1990 + i%>><%=yearList.get(i)%></option>
+										<option value=<%=year_start + i%>><%=yearList.get(i)%></option>
 										<%
 											}
 											}
@@ -325,11 +327,11 @@
 											for (int i = 0; i < yearList.size(); i++) {
 												if (year_end.equals(yearList.get(i))) {
 										%>
-										<option value=<%=1990 + i%> selected><%=yearList.get(i)%></option>
+										<option value=<%=year_start + i%> selected><%=yearList.get(i)%></option>
 										<%
 											} else {
 										%>
-										<option value=<%=1990 + i%>><%=yearList.get(i)%></option>
+										<option value=<%=year_start + i%>><%=yearList.get(i)%></option>
 										<%
 											}
 											}
